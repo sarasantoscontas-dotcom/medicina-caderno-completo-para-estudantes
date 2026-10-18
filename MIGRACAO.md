@@ -1,14 +1,15 @@
-# Migração
+# Site de apresentação do Caderno de Medicina
 
-Origem: https://medicina-caderno-completo.lovable.app/
-Captura: 18/10/2026.
+A página mantém o bundle original de apresentação, textos e links de compra. A camada complementar está em `assets/expansion.js`, `assets/expansion.css` e `assets/expansion-content.json`, para permitir manutenção sem alterar o arquivo compilado original.
 
-Os bundles JavaScript e CSS são os arquivos publicados originais, sem alterações. Eles contêm a página de apresentação, textos, cartões, animações e FAQ. O checkout Cakto foi preservado. Não há área de membros ou banco de dados incluído no endereço público fornecido.
+Ampliação: 820 flashcards no total (82 originais + 738 adicionais, com perguntas únicas), 24 novas fichas extensas, aprofundamento das 14 fichas originais, 12 cartões por período, 12 benefícios complementares e seis prévias ilustrativas. As prévias são representações da organização do caderno, não capturas de tela do sistema.
 
-O HTML preserva o visual e o selo do original. Apenas os scripts de telemetria específicos do servidor Lovable foram removidos, porque dependem de endpoints da hospedagem anterior. A imagem social dos metadados permanece no endereço original.
+O repositório `caderno-acesso-medicina` foi consultado somente para leitura. Nenhuma alteração foi feita nele. Os exemplos usam conteúdo e organização desse caderno. Os dados privados de usuários não foram utilizados.
 
-## Hospedar
+O selo de edição e favicon Lovable foram removidos. O cabeçalho próprio do Caderno de Medicina foi preservado.
 
-Execute `npm run build` e publique a pasta `dist`. Não há dependências para instalar. Em hospedagens com roteamento SPA, direcione rotas desconhecidas a `index.html`. Incluídos `_redirects`, `404.html` e `vercel.json`.
+## Publicar
 
-Esta é uma cópia da versão compilada publicada; o endereço público não fornece os componentes React/TypeScript originais editáveis.
+`npm run build` gera `dist/`, sem dependências externas. A configuração da Vercel define o comando e a pasta de saída. `_redirects` e `404.html` oferecem compatibilidade com hospedagem estática.
+
+A origem forneceu arquivos compilados, não os componentes React/TypeScript originais. O conteúdo novo fica separado e editável.
