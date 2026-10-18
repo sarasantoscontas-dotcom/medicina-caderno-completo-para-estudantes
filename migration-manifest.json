@@ -16,23 +16,28 @@
   },
   {
     "path": "MIGRACAO.md",
-    "bytes": 1714,
-    "sha256": "e6c4e55eceff524389daf4d223d8202bcf5d70c45a5ef229a52a737db1710c65"
+    "bytes": 1980,
+    "sha256": "e68b8dfa01fc911304f377d8bc94e9e1aee3e29a33b2849790e72f95bac3dce8"
   },
   {
     "path": "404.html",
-    "bytes": 1772,
-    "sha256": "4bf829b2c769b7ea63c5731326f7ab2409daa8184e0fb258a3459415b7af04bc"
+    "bytes": 2142,
+    "sha256": "85e426ea85dc7618f1b27ca01ea0d16c43684e1c9f0adc3ea789b0cb3973ee74"
   },
   {
     "path": "index.html",
-    "bytes": 1772,
-    "sha256": "4bf829b2c769b7ea63c5731326f7ab2409daa8184e0fb258a3459415b7af04bc"
+    "bytes": 2142,
+    "sha256": "85e426ea85dc7618f1b27ca01ea0d16c43684e1c9f0adc3ea789b0cb3973ee74"
   },
   {
     "path": "_redirects",
     "bytes": 19,
     "sha256": "6036983e5fc00f0169c9e939b1816ed771eee00e27f2fcc517b819041460b9ef"
+  },
+  {
+    "path": "assets/notebook-theme.css",
+    "bytes": 9078,
+    "sha256": "91ad4b0c1a67ee11284875414464fbaf7c6fd3e6ee0f5a01dd03ebea0f664b4a"
   },
   {
     "path": "assets/expansion.css",
@@ -42,7 +47,7 @@
   {
     "path": "assets/index-CljeuDKD.js",
     "bytes": 426213,
-    "sha256": "98ac9cd589c2b43806b796a85ae3deb7e3fc12b3d1946d55bcbbc1e94da90c08"
+    "sha256": "68e7fec032cfa664287851a7c06bc126d2c55272ee4f3adaa1c88f9d79cf423d"
   },
   {
     "path": "assets/index-D8DMoBEj.css",

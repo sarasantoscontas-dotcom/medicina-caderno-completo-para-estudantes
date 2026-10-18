@@ -17,3 +17,7 @@ A origem forneceu arquivos compilados, não os componentes React/TypeScript orig
 ## Apresentação no celular
 
 Até 700px, os flashcards aparecem em duas colunas com resposta expansível. As fichas usam abertura individual; todas as perguntas, respostas e seções continuam no documento. Há controle para abrir ou recolher todas as respostas. Acima desse tamanho, o conteúdo começa aberto. O layout respeita a preferência por movimento reduzido.
+
+## Identidade do caderno
+
+A camada `assets/notebook-theme.css` aplica papel pautado, paleta pastel e as fontes DM Sans, Libre Baskerville e Caveat. Os componentes e textos anteriores permanecem; a referência é o próprio caderno e a imagem enviada em 18/10/2026.
