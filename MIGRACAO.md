@@ -13,3 +13,7 @@ O selo de edição e favicon Lovable foram removidos. O cabeçalho próprio do C
 `npm run build` gera `dist/`, sem dependências externas. A configuração da Vercel define o comando e a pasta de saída. `_redirects` e `404.html` oferecem compatibilidade com hospedagem estática.
 
 A origem forneceu arquivos compilados, não os componentes React/TypeScript originais. O conteúdo novo fica separado e editável.
+
+## Apresentação no celular
+
+Até 700px, os flashcards aparecem em duas colunas com resposta expansível. As fichas usam abertura individual; todas as perguntas, respostas e seções continuam no documento. Há controle para abrir ou recolher todas as respostas. Acima desse tamanho, o conteúdo começa aberto. O layout respeita a preferência por movimento reduzido.

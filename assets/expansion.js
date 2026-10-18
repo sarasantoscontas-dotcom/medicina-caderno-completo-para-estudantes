@@ -21,12 +21,28 @@
     originalGrid.classList.add('original-flash-grid');
     flashSection.classList.add('expanded-flash-section');
     const cats = [...new Set(data.cards.map(c=>c.cat))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
-    const controls = el(`<div class="flash-toolbar"><div><strong>${data.totalCount} flashcards para explorar</strong><p>Perguntas e respostas abertas, organizadas por disciplina.</p></div><div class="flash-fields"><label>Buscar assunto<input type="search" id="med-card-search" placeholder="Ex.: coração, transporte, imunidade"></label><label>Disciplina<select id="med-card-category"><option value="">Todas as disciplinas</option>${cats.map(c=>`<option>${esc(c)}</option>`).join('')}</select></label></div><p id="med-card-count" role="status" aria-live="polite">${data.totalCount} cartões visíveis</p></div>`);
+    const controls = el(`<div class="flash-toolbar"><div><strong>${data.totalCount} flashcards para explorar</strong><p>Explore por disciplina. No celular, toque no cartão para abrir a resposta completa.</p></div><div class="flash-fields"><label>Buscar assunto<input type="search" id="med-card-search" placeholder="Ex.: coração, transporte, imunidade"></label><label>Disciplina<select id="med-card-category"><option value="">Todas as disciplinas</option>${cats.map(c=>`<option>${esc(c)}</option>`).join('')}</select></label></div><p id="med-card-count" role="status" aria-live="polite">${data.totalCount} cartões visíveis</p></div>`);
     originalGrid.before(controls);
     const cardGrid = document.createElement('div'); cardGrid.className='more-flash-grid';
     cardGrid.innerHTML = data.cards.map((c,i)=>`<article class="more-flashcard tone-${i%6}" data-category="${esc(c.cat)}"><div class="flash-meta"><span>${esc(c.cat)}</span><small>${String(i+data.originalCount+1).padStart(3,'0')}</small></div><span class="flash-kind">${esc(c.kind)}</span><h3>${esc(c.q)}</h3><div class="flash-answer"><span>Resposta</span><p>${esc(c.a)}</p></div></article>`).join('');
     originalGrid.after(cardGrid);
     const newCards=Array.from(cardGrid.children);
+    // Native disclosures keep the complete text in the document and keyboard accessible.
+    [...originalCards,...newCards].forEach((outer,index)=>{
+      const card=index<originalCards.length?outer.querySelector('article'):outer;
+      const question=index<originalCards.length?card.querySelector('p'):card.querySelector('h3');
+      const answer=index<originalCards.length?card.querySelectorAll('p')[1]:card.querySelector('.flash-answer');
+      if(!question||!answer)return;
+      const reveal=document.createElement('details');reveal.className='compact-disclosure card-reveal';
+      const summary=document.createElement('summary');
+      const prompt=document.createElement('span');prompt.className='compact-question';prompt.textContent=question.textContent;
+      const hint=document.createElement('span');hint.className='reveal-hint';hint.textContent='Ver resposta';
+      summary.append(prompt,hint);reveal.append(summary,answer);question.replaceWith(reveal);
+      if(index<originalCards.length){card.classList.add('original-compact-card');Array.from(card.children).filter(e=>e.tagName==='SPAN'&&e.classList.contains('h-px')).forEach(e=>e.remove());}
+    });
+    const bulk=document.createElement('button');bulk.type='button';bulk.className='mobile-answer-toggle';bulk.textContent='Abrir todas as respostas';bulk.setAttribute('aria-pressed','false');
+    document.querySelector('.flash-toolbar').append(bulk);
+    bulk.addEventListener('click',()=>{const open=bulk.getAttribute('aria-pressed')!=='true';flashSection.querySelectorAll('.card-reveal').forEach(d=>d.open=open);bulk.setAttribute('aria-pressed',String(open));bulk.textContent=open?'Recolher as respostas':'Abrir todas as respostas';});
     const filter=()=>{
       const q=normalize(document.querySelector('#med-card-search').value.trim());
       const cat=document.querySelector('#med-card-category').value;
@@ -87,6 +103,25 @@
       ];
       previews.after(el(section('Uma visão mais próxima','Veja o estudo ganhar forma na tela.','Prévias ilustrativas baseadas na organização e nas funcionalidades do Caderno de Medicina. Aqui, as telas apresentam exemplos de uso para você conhecer cada área.',`<div class="screens-grid">${screens.map((s,i)=>`<article class="preview-explained"><div class="screen-frame tone-${i%6}">${mark(s[0],s[3])}</div><span class="more-kicker">${s[0]}</span><h3>${s[1]}</h3><p>${s[2]}</p></article>`).join('')}</div>`,'screen-section')));
     }
+    // Encapsulate reading sheets while preserving every original node and paragraph.
+    function encapsulate(card,titleNode,bodyNodes){
+      if(!titleNode||!bodyNodes.length)return;
+      const details=document.createElement('details');details.className='compact-disclosure reading-reveal';
+      const summary=document.createElement('summary');
+      summary.append(titleNode);const hint=document.createElement('span');hint.className='reading-hint';hint.textContent='Abrir ficha completa';summary.append(hint);
+      details.append(summary);bodyNodes.forEach(node=>details.append(node));card.append(details);
+    }
+    if(sheetSection)Array.from(sheetSection.querySelectorAll('.max-w-3xl')).forEach(card=>{
+      const title=Array.from(card.children).find(n=>n.querySelector('h3'));
+      if(title)encapsulate(card,title,Array.from(card.children).filter(n=>n!==card.firstElementChild&&n!==title));
+    });
+    document.querySelectorAll('.study-sheet').forEach(card=>encapsulate(card,card.querySelector('header'),[card.querySelector('.sheet-body')]));
+    const mobile=window.matchMedia('(max-width: 700px)');
+    const applyDensity=()=>{
+      document.querySelectorAll('.compact-disclosure').forEach(details=>details.open=!mobile.matches);
+      bulk.setAttribute('aria-pressed',String(!mobile.matches));bulk.textContent=mobile.matches?'Abrir todas as respostas':'Recolher as respostas';
+    };
+    applyDensity();mobile.addEventListener('change',applyDensity);
   }
   fetch(contentUrl).then(r=>{if(!r.ok)throw Error('Conteúdo complementar indisponível');return r.json();}).then(data=>{
     if(sectionFor('Veja os flashcards'))expand(data);
