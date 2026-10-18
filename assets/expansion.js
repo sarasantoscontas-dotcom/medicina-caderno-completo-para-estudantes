@@ -33,7 +33,7 @@
       const question=index<originalCards.length?card.querySelector('p'):card.querySelector('h3');
       const answer=index<originalCards.length?card.querySelectorAll('p')[1]:card.querySelector('.flash-answer');
       if(!question||!answer)return;
-      const reveal=document.createElement('details');reveal.className='compact-disclosure card-reveal';
+      const reveal=document.createElement('details');reveal.className='compact-disclosure card-reveal';if(index<20){reveal.dataset.mobileOpen='true';card.classList.add('preview-open-card');}
       const summary=document.createElement('summary');
       const prompt=document.createElement('span');prompt.className='compact-question';prompt.textContent=question.textContent;
       const hint=document.createElement('span');hint.className='reveal-hint';hint.textContent='Ver resposta';
@@ -103,6 +103,60 @@
       ];
       previews.after(el(section('Uma visão mais próxima','Veja o estudo ganhar forma na tela.','Prévias ilustrativas baseadas na organização e nas funcionalidades do Caderno de Medicina. Aqui, as telas apresentam exemplos de uso para você conhecer cada área.',`<div class="screens-grid">${screens.map((s,i)=>`<article class="preview-explained"><div class="screen-frame tone-${i%6}">${mark(s[0],s[3])}</div><span class="more-kicker">${s[0]}</span><h3>${s[1]}</h3><p>${s[2]}</p></article>`).join('')}</div>`,'screen-section')));
     }
+    const lineList=rows=>`<div class="plan-lines">${rows.map(([label,title,description])=>`<div class="plan-line"><span>${esc(label)}</span><div><strong>${esc(title)}</strong><p>${esc(description)}</p></div></div>`).join('')}</div>`;
+    const miniCard=(question,answer)=>`<aside class="plan-explainer"><span>Flashcard explicativo</span><h4>${esc(question)}</h4><p>${esc(answer)}</p></aside>`;
+    const samples=[
+      ['Plano semestral · 5º período','Um semestre inteiro, em linhas de estudo','Exemplo de 16 semanas integrando Semiologia, Patologia e Farmacologia. As semanas mostram como distribuir conteúdo novo, prática e revisão; você adapta a sequência às aulas e às avaliações da sua faculdade.',[
+        ['01–02','Organizar o ponto de partida','Separar as ementas e datas de prova; retomar bases de fisiologia e preparar os primeiros roteiros de anamnese.'],
+        ['03–04','Conectar os mecanismos','Estudar lesão e inflamação; relacionar os conceitos aos temas de semiologia e aos princípios de ação dos fármacos.'],
+        ['05–06','Treinar observação e comunicação','Preparar o exame físico estudado na disciplina; discutir os achados das atividades supervisionadas e anotar dúvidas.'],
+        ['07–08','Fazer a primeira revisão integrada','Retomar flashcards, resolver questões e separar erros de conceito, interpretação e esquecimento antes da avaliação.'],
+        ['09–10','Aprofundar os temas do semestre','Organizar resumos por assunto e comparar mecanismos, manifestações e relações com farmacologia nas discussões de casos.'],
+        ['11–12','Levar as dúvidas para a prática','Relacionar os temas das aulas às atividades de laboratório e ambulatório; registrar o aprendizado e os pontos de revisão.'],
+        ['13–14','Revisar com base nos erros','Priorizar os assuntos ainda frágeis, retomar questões e organizar os trabalhos com antecedência em relação aos prazos.'],
+        ['15–16','Consolidar e fechar o semestre','Fazer revisão acumulada, conferir entregas e frequência, registrar o que ficou bem aprendido e as bases para o período seguinte.']
+      ],['Como o plano semestral ajuda no estudo?','Ele dá uma visão do período inteiro. O cronograma semanal transforma essa visão em blocos de leitura, prática e revisão, enquanto a análise de erros ajuda a ajustar as prioridades.']],
+      ['Atividades acompanhadas · 10º período','Um exemplo de semana no internato','O diário reúne o contexto acadêmico da atividade, o objetivo de aprendizagem, os assuntos discutidos e o retorno da supervisão. O exemplo abaixo mostra como a prática pode orientar a revisão.',[
+        ['SEG','Clínica Médica · discussão de enfermaria','Preparar o tema, acompanhar a discussão e registrar quais conceitos precisam ser retomados no resumo.'],
+        ['TER','Cirurgia · preparação e discussão','Organizar o objetivo da atividade supervisionada, anotar o aprendizado e reunir dúvidas para a devolutiva.'],
+        ['QUA','Pediatria · consulta acompanhada','Relacionar os temas de crescimento, desenvolvimento e prevenção ao conteúdo trabalhado na disciplina.'],
+        ['QUI','Atenção Primária · continuidade do cuidado','Observar como o acompanhamento ao longo do tempo se conecta à história, ao contexto familiar e ao plano discutido.'],
+        ['SEX','Feedback e fechamento da semana','Revisar os objetivos do rodízio, registrar pontos fortes e dificuldades e escolher os temas da próxima sessão de estudo.']
+      ],['O que escrever depois de uma atividade acompanhada?','Registre cenário e tema, objetivo, atividade observada ou realizada sob supervisão, aprendizados, dúvidas e feedback. Use registros acadêmicos sem dados que identifiquem pacientes.']],
+      ['Plano de estudos para residência','Da leitura do edital à revisão final','Exemplo de organização em 12 semanas. A distribuição por grande área segue os pesos e o conteúdo do edital escolhido e pode ser ajustada a cada ciclo de questões.',[
+        ['01–02','Mapear o edital e o ponto de partida','Separar etapas, prazos e conteúdo programático; fazer um bloco inicial de questões para identificar os assuntos mais frágeis.'],
+        ['03–04','Clínica Médica e revisão acumulada','Alternar estudo dos temas priorizados com questões e retomada dos erros, sem deixar os conteúdos anteriores desaparecerem da rotina.'],
+        ['05–06','Cirurgia e raciocínio por casos','Revisar os temas previstos no edital, comparar hipóteses nos casos de estudo e separar os pontos que geram confusão nas questões.'],
+        ['07–08','Pediatria e Ginecologia–Obstetrícia','Distribuir os assuntos entre as duas áreas, analisar o desempenho e voltar aos resumos quando um erro revelar uma lacuna de base.'],
+        ['09–10','Preventiva, Saúde Coletiva e integração','Organizar os eixos do edital, revisar conceitos de epidemiologia e intercalar questões das grandes áreas já estudadas.'],
+        ['11–12','Simulados, currículo e revisão final','Resolver simulados com tempo marcado, revisar erros recorrentes e conferir documentos e etapas de análise curricular quando previstos.']
+      ],['Como usar o caderno de erros na preparação para residência?','Anote o assunto, a razão do erro, a explicação correta e o ponto a revisar. Depois, volte ao tema com questões e flashcards: o objetivo é acompanhar o entendimento, não apenas contar acertos.']],
+      ['Resumos por disciplina','Uma leitura com começo, conexão e revisão','O resumo é organizado por assunto para que o estudante compreenda o conceito e consiga retomá-lo depois.',[
+        ['01','Entender o conceito','Começar pela explicação central e identificar o vocabulário que precisa estar claro.'],
+        ['02','Conectar as disciplinas','Relacionar estrutura, funcionamento e mecanismos de doença ao tema estudado.'],
+        ['03','Aplicar à discussão','Usar os quadros e exemplos para explicar o assunto em uma questão ou caso de estudo.'],
+        ['04','Revisar o que ficou frágil','Transformar as dúvidas em perguntas e retomar os flashcards correspondentes.']
+      ],['O que torna um resumo útil para a prova?','A organização por conceitos e relações ajuda a explicar o assunto com suas palavras. Quadros, questões e revisão ativa permitem conferir se a leitura virou compreensão.']],
+      ['Flashcards · revisão espaçada','Uma rotina curta para revisar melhor','Os cartões conectam o conteúdo já estudado à recuperação ativa: tentar lembrar, comparar com a resposta e retomar as dúvidas.',[
+        ['01','Escolher a disciplina','Começar pelos assuntos estudados recentemente e pelas dificuldades identificadas nas questões.'],
+        ['02','Tentar responder primeiro','Ler a pergunta e formular uma resposta antes de consultar o verso.'],
+        ['03','Comparar e compreender','Conferir a explicação e voltar ao resumo quando faltar uma relação importante.'],
+        ['04','Acompanhar a dificuldade','No caderno, classificar o desempenho ajuda a organizar as próximas revisões.']
+      ],['Por que alternar resumos e flashcards?','O resumo explica o contexto e as relações; o flashcard ajuda a recuperar uma ideia sem reler tudo. Os dois formatos se complementam na rotina de estudo.']],
+      ['TCC em Medicina','Uma pesquisa dividida em etapas','O acompanhamento reúne planejamento, leitura, método, escrita e preparação da apresentação.',[
+        ['TEMA','Delimitar a pergunta','Organizar o assunto, o problema e os objetivos com a orientação docente.'],
+        ['LEITURA','Construir a base teórica','Separar referências e fichamentos por tema e registrar as ideias que sustentam o projeto.'],
+        ['MÉTODO','Planejar a execução','Organizar desenho, etapas, variáveis e cuidados éticos conforme a proposta do estudo.'],
+        ['ESCRITA','Acompanhar versões e entregas','Distribuir a redação por etapas, revisar com a orientação e preparar a defesa.']
+      ],['Como evitar acumular o TCC para o final?','Divida o trabalho em entregas menores, com prazo e critério de conclusão: pergunta, revisão, projeto, análise, texto e apresentação. O cronograma precisa refletir as etapas reais da sua pesquisa.']]
+    ];
+    const sampleSection=sectionFor('Amostra do caderno');
+    if(sampleSection)samples.forEach(([title,subtitle,intro,rows,card])=>{
+      const headingNode=Array.from(sampleSection.querySelectorAll('h3')).find(h=>h.textContent.trim()===title);
+      if(!headingNode)return;
+      headingNode.parentElement.append(el(`<div class="plan-example"><span class="more-kicker">Por dentro da rotina</span><h4>${esc(subtitle)}</h4><p class="plan-intro">${esc(intro)}</p>${lineList(rows)}${miniCard(...card)}</div>`));
+    });
+
     // Encapsulate reading sheets while preserving every original node and paragraph.
     function encapsulate(card,titleNode,bodyNodes){
       if(!titleNode||!bodyNodes.length)return;
@@ -116,9 +170,11 @@
       if(title)encapsulate(card,title,Array.from(card.children).filter(n=>n!==card.firstElementChild&&n!==title));
     });
     document.querySelectorAll('.study-sheet').forEach(card=>encapsulate(card,card.querySelector('header'),[card.querySelector('.sheet-body')]));
+    if(sheetSection)Array.from(sheetSection.querySelectorAll('.reading-reveal')).slice(0,10).forEach(d=>d.dataset.mobileOpen='true');
+    Array.from(document.querySelectorAll('.study-sheet .reading-reveal')).slice(0,3).forEach(d=>d.dataset.mobileOpen='true');
     const mobile=window.matchMedia('(max-width: 700px)');
     const applyDensity=()=>{
-      document.querySelectorAll('.compact-disclosure').forEach(details=>details.open=!mobile.matches);
+      document.querySelectorAll('.compact-disclosure').forEach(details=>details.open=!mobile.matches||details.dataset.mobileOpen==='true');
       bulk.setAttribute('aria-pressed',String(!mobile.matches));bulk.textContent=mobile.matches?'Abrir todas as respostas':'Recolher as respostas';
     };
     applyDensity();mobile.addEventListener('change',applyDensity);

@@ -21,3 +21,7 @@ Até 700px, os flashcards aparecem em duas colunas com resposta expansível. As 
 ## Identidade do caderno
 
 A camada `assets/notebook-theme.css` aplica papel pautado, paleta pastel e as fontes DM Sans, Libre Baskerville e Caveat. Os componentes e textos anteriores permanecem; a referência é o próprio caderno e a imagem enviada em 18/10/2026.
+
+## Exemplos já abertos
+
+No celular, as dez primeiras fichas originais, as três primeiras fichas complementares (15 a 17) e os vinte primeiros flashcards começam abertos. Foram acrescentados exemplos explicativos de plano semestral, internato, residência, resumos, revisão e TCC dentro das amostras existentes.
