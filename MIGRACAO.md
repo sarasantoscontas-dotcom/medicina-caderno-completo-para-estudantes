@@ -29,3 +29,7 @@ No celular, as dez primeiras fichas originais, as três primeiras fichas complem
 ## Agenda acadêmica explicativa
 
 Seção dedicada com semana ilustrativa de 9 a 13/11/2026, 15 compromissos e filtros por dia. Inclui provas, seminário, revisões, entrega de relatório e integração com atividades supervisionadas. Não cria ou altera compromissos reais.
+
+## Semana inteira sem filtros
+
+A seção de agenda agora exibe os cinco dias integralmente, sem filtros ou conteúdo dependente de clique. O guia acrescenta seis cartões de método, cinco explicações diárias, quatro conexões entre estudo e prática e três perguntas de fechamento, todas abertas.
