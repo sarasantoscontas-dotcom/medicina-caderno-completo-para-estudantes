@@ -25,3 +25,7 @@ A camada `assets/notebook-theme.css` aplica papel pautado, paleta pastel e as fo
 ## Exemplos já abertos
 
 No celular, as dez primeiras fichas originais, as três primeiras fichas complementares (15 a 17) e os vinte primeiros flashcards começam abertos. Foram acrescentados exemplos explicativos de plano semestral, internato, residência, resumos, revisão e TCC dentro das amostras existentes.
+
+## Agenda acadêmica explicativa
+
+Seção dedicada com semana ilustrativa de 9 a 13/11/2026, 15 compromissos e filtros por dia. Inclui provas, seminário, revisões, entrega de relatório e integração com atividades supervisionadas. Não cria ou altera compromissos reais.

@@ -157,6 +157,49 @@
       headingNode.parentElement.append(el(`<div class="plan-example"><span class="more-kicker">Por dentro da rotina</span><h4>${esc(subtitle)}</h4><p class="plan-intro">${esc(intro)}</p>${lineList(rows)}${miniCard(...card)}</div>`));
     });
 
+    const agendaAnchor=sectionFor('Amostra do caderno');
+    if(agendaAnchor){
+      const events=[
+        ['seg','09','Segunda','08h–10h','Semiologia cardiovascular','Aula e preparação do roteiro de exame físico.','aula','Aula'],
+        ['seg','09','Segunda','14h–15h','Resumo + revisão ativa','Revisar ciclo cardíaco e responder aos flashcards ligados à aula.','revisao','Revisão'],
+        ['seg','09','Segunda','17h–17h30','Começar o relatório de prática','Separar objetivo, observações e referências antes da entrega de quinta-feira.','trabalho','Trabalho'],
+        ['ter','10','Terça','07h–12h','Atividade supervisionada na UBS','Levar o roteiro de aprendizagem e anotar os temas para discutir na preceptoria.','estagio','Estágio'],
+        ['ter','10','Terça','15h–16h','Patologia · inflamação','Estudar mecanismos e organizar o quadro comparativo da disciplina.','aula','Estudo'],
+        ['ter','10','Terça','18h–18h30','Retomar dúvidas do estágio','Relacionar as dúvidas da atividade aos resumos de Semiologia.','revisao','Revisão'],
+        ['qua','11','Quarta','08h–09h','Farmacologia · receptores','Rever agonistas, antagonistas e relações entre dose e resposta.','aula','Estudo'],
+        ['qua','11','Quarta','10h–11h','Seminário de Patologia','Apresentação em grupo: mecanismo, exemplos e discussão com a turma.','prova','Avaliação'],
+        ['qua','11','Quarta','16h–17h','Relatório · versão para revisão','Conferir a estrutura, organizar as referências e revisar o texto.','trabalho','Entrega em preparação'],
+        ['qui','12','Quinta','08h–10h','Prática de Semiologia','Preparar materiais e registrar o aprendizado depois da atividade.','estagio','Prática'],
+        ['qui','12','Quinta','Até 18h','Entregar relatório de prática','Histologia · PDF final, identificação da disciplina e referências conferidas.','trabalho','Prazo de entrega'],
+        ['qui','12','Quinta','19h–19h40','Revisão para a prova','Retomar questões erradas e os conceitos de Patologia ainda frágeis.','revisao','Pré-prova'],
+        ['sex','13','Sexta','09h–10h30','Prova de Patologia','Inflamação, lesão celular e reparo · revisão concluída na véspera.','prova','Prova'],
+        ['sex','13','Sexta','14h–15h','Feedback do estágio','Rever objetivos de aprendizagem e registrar pontos para o próximo encontro.','estagio','Acompanhamento'],
+        ['sex','13','Sexta','17h–17h30','Fechar a semana','Conferir entregas, registrar dúvidas e distribuir as prioridades seguintes.','revisao','Planejamento']
+      ];
+      const days=[['todos','Semana inteira'],['seg','Seg · 09'],['ter','Ter · 10'],['qua','Qua · 11'],['qui','Qui · 12'],['sex','Sex · 13']];
+      const agendaMarkup=`<section class="agenda-lab" aria-labelledby="agenda-title">
+        <header class="agenda-intro"><div><span class="agenda-script">Entre uma aula e outra, a sua semana faz sentido.</span><span class="agenda-kicker">Agenda & planejamento acadêmico</span><h2 id="agenda-title">Aulas, provas e entregas no mesmo plano.</h2><p>A agenda conecta o que você precisa estudar, quando vai ser avaliado, o que tem para entregar e os compromissos da prática. Um lugar para transformar o semestre em uma rotina que dá para acompanhar.</p></div><aside class="agenda-note"><span>meu plano da semana</span><p>Revisar Patologia.<br>Entregar o relatório.<br>Levar as dúvidas para a preceptoria.</p><small>Uma prioridade de cada vez.</small></aside></header>
+        <div class="agenda-dashboard"><div class="agenda-dashboard-head"><div><span class="agenda-kicker">Exemplo de rotina · 5º período</span><h3>09 a 13 de novembro</h3><p>Semana ilustrativa preenchida para mostrar como os compromissos se conectam.</p></div><span class="agenda-semester">Semestre em andamento</span></div>
+        <div class="agenda-counters"><div><strong>05</strong><span>dias organizados</span></div><div><strong>02</strong><span>avaliações na semana</span></div><div><strong>01</strong><span>relatório para entregar</span></div><div><strong>04</strong><span>blocos de revisão</span></div></div>
+        <nav class="agenda-day-nav" aria-label="Escolher dia da agenda">${days.map(([id,label],i)=>`<button type="button" data-agenda-day="${id}" aria-pressed="${i===0}">${label}</button>`).join('')}</nav>
+        <p class="agenda-day-status" role="status" aria-live="polite">15 compromissos · semana inteira</p>
+        <div class="agenda-events">${events.map(([day,date,label,time,title,desc,tone,tag])=>`<article class="agenda-event agenda-${tone}" data-day="${day}"><div class="agenda-event-top"><span>${label} · ${date}/11</span><small>${tag}</small></div><time>${time}</time><h4>${title}</h4><p>${desc}</p></article>`).join('')}</div></div>
+        <div class="agenda-panels"><article class="agenda-panel agenda-exams"><span class="agenda-panel-label">Provas & avaliações</span><h3>Você sabe o que vem pela frente.</h3><p>Data, assunto, formato e preparação ficam próximos. Assim, a prova entra no planejamento antes de virar a única prioridade da semana.</p><div class="agenda-record"><div><span>11 NOV</span><strong>Seminário de Patologia</strong></div><p>Em grupo · inflamação e mecanismos de lesão.</p><ul><li>Reunir o conteúdo do grupo</li><li>Revisar slides e referências</li><li>Ensaiar a apresentação</li></ul><span class="agenda-pill">Preparação distribuída na semana</span></div><div class="agenda-record"><div><span>13 NOV</span><strong>Prova de Patologia</strong></div><p>Prova teórica · inflamação, lesão celular e reparo.</p><ul><li>Retomar os resumos por assunto</li><li>Resolver questões e registrar erros</li><li>Revisar os conceitos ainda frágeis</li></ul><span class="agenda-pill">Revisão final na quinta-feira</span></div></article>
+        <article class="agenda-panel agenda-revisions"><span class="agenda-panel-label">Revisões & continuidade</span><h3>O conteúdo de hoje volta ao seu plano.</h3><p>O estudo novo não fica isolado. Você separa momentos para recuperar ideias, conferir dúvidas e voltar aos assuntos que ainda precisam de atenção.</p><ol class="agenda-review-path"><li><b>Segunda</b><strong>Ciclo cardíaco</strong><p>Conectar o resumo de Fisiologia à aula de Semiologia e tentar responder aos cartões.</p></li><li><b>Terça</b><strong>Dúvidas da UBS</strong><p>Retomar os pontos da atividade supervisionada e organizar perguntas para a preceptoria.</p></li><li><b>Quinta</b><strong>Patologia pré-prova</strong><p>Usar os erros das questões para escolher o que vale rever antes da avaliação.</p></li><li><b>Sexta</b><strong>Fechamento da semana</strong><p>Registrar o que ficou claro e o que precisa voltar ao cronograma seguinte.</p></li></ol></article>
+        <article class="agenda-panel agenda-deliveries"><span class="agenda-panel-label">Trabalhos & prazos</span><h3>Uma entrega dividida em passos.</h3><p>Não é só lembrar a data final: é separar o que precisa acontecer antes dela, considerando o estágio, as aulas e os períodos disponíveis.</p><div class="agenda-deadline"><span>QUINTA · 12/11 · ATÉ 18H</span><h4>Relatório de prática de Histologia</h4><p>Formato PDF · texto revisado e referências organizadas.</p></div><div class="agenda-task-list">${[['Seg · 09','Separar objetivo e observações','done'],['Qua · 11','Revisar o texto e as referências','current'],['Qui · 12','Conferir o arquivo e entregar','next']].map(([date,title,status])=>`<div class="agenda-task ${status}"><i aria-hidden="true">${status==='done'?'✓':status==='current'?'2':'3'}</i><span><small>${date}</small><strong>${title}</strong></span></div>`).join('')}</div><p class="agenda-small-note">O bloco de escrita fica fora do horário de estágio: o plano respeita os compromissos já assumidos.</p></article></div>
+        <article class="agenda-stage-bridge"><div><span class="agenda-kicker">Estágio, prática e preceptoria</span><h3>A prática também organiza o que você vai estudar.</h3><p>Antes da atividade, você prepara o objetivo e o roteiro. Depois, registra aprendizados e dúvidas. O retorno da supervisão ajuda a definir o próximo bloco de estudo.</p></div><div class="agenda-stage-steps"><div><span>ANTES</span><strong>Preparar</strong><p>Objetivo da atividade, materiais e conteúdo para retomar.</p></div><div><span>DEPOIS</span><strong>Registrar</strong><p>Aprendizados, dúvidas e pontos discutidos com a equipe.</p></div><div><span>PRÓXIMO PASSO</span><strong>Revisar</strong><p>Resumo correspondente, flashcards e nova discussão.</p></div></div></article>
+        <footer class="agenda-takeaway"><span>Do semestre para a semana. Da semana para o que fazer hoje.</span><p>Planejar aulas, acompanhar provas, dividir trabalhos em etapas, retomar revisões e reservar tempo para a prática — com cada compromisso no seu contexto.</p></footer>
+      </section>`;
+      agendaAnchor.after(el(agendaMarkup));
+      const agenda=document.querySelector('.agenda-lab');
+      agenda.querySelectorAll('[data-agenda-day]').forEach(button=>button.addEventListener('click',()=>{
+        const day=button.dataset.agendaDay;let visible=0;
+        agenda.querySelectorAll('[data-agenda-day]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+        agenda.querySelectorAll('.agenda-event').forEach(card=>{card.hidden=day!=='todos'&&card.dataset.day!==day;if(!card.hidden)visible++;});
+        agenda.querySelector('.agenda-day-status').textContent=`${visible} compromissos · ${day==='todos'?'semana inteira':button.textContent}`;
+      }));
+    }
+
     // Encapsulate reading sheets while preserving every original node and paragraph.
     function encapsulate(card,titleNode,bodyNodes){
       if(!titleNode||!bodyNodes.length)return;
