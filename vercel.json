@@ -1,7 +1,11 @@
 {
+  "framework": null,
+  "installCommand": "echo \"Site estatico sem dependencias\"",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/((?!assets/|favicon.ico).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
