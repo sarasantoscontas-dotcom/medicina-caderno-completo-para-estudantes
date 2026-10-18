@@ -16,8 +16,8 @@
   },
   {
     "path": "MIGRACAO.md",
-    "bytes": 2875,
-    "sha256": "d002731b59dfe69f31e8b1db26cdcf505fc91fd9c5c4ebb2b0f4d275ff1abf34"
+    "bytes": 3167,
+    "sha256": "613454984aacfbbf662ca610461a785815a26cd068919af165b35ccf4aa02f59"
   },
   {
     "path": "404.html",
@@ -36,8 +36,8 @@
   },
   {
     "path": "assets/notebook-theme.css",
-    "bytes": 9078,
-    "sha256": "91ad4b0c1a67ee11284875414464fbaf7c6fd3e6ee0f5a01dd03ebea0f664b4a"
+    "bytes": 10398,
+    "sha256": "235ac210608467878859e0ff1d442e10bba3834ef5f7a930187815427d9bd91c"
   },
   {
     "path": "assets/expansion.css",
@@ -61,8 +61,8 @@
   },
   {
     "path": "assets/expansion.js",
-    "bytes": 57296,
-    "sha256": "7d37945b721c59bb45ef4a91ec12aa295565c8f4334cb5c1631dd6fe18151c77"
+    "bytes": 56063,
+    "sha256": "be96ea901f1e830ecab118fa94ff32850047672417ece11a3a94d63fc7c78301"
   },
   {
     "path": "scripts/build.mjs",

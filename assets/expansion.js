@@ -4,7 +4,6 @@
   const script = document.currentScript;
   const contentUrl = new URL('expansion-content.json', script.src);
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const normalize = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   const sectionFor = title => Array.from(document.querySelectorAll('main h2')).find(h => h.textContent.includes(title))?.closest('section');
   const el = html => { const template = document.createElement('template'); template.innerHTML = html; return template.content; };
   const heading = (kicker, title, intro) => `<header class="more-heading"><span class="more-kicker">${esc(kicker)}</span><h2>${esc(title)}</h2><p>${esc(intro)}</p></header>`;
@@ -20,11 +19,10 @@
     const originalCards = Array.from(originalGrid.children);
     originalGrid.classList.add('original-flash-grid');
     flashSection.classList.add('expanded-flash-section');
-    const cats = [...new Set(data.cards.map(c=>c.cat))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
-    const controls = el(`<div class="flash-toolbar"><div><strong>${data.totalCount} flashcards para explorar</strong><p>Explore por disciplina. No celular, toque no cartão para abrir a resposta completa.</p></div><div class="flash-fields"><label>Buscar assunto<input type="search" id="med-card-search" placeholder="Ex.: coração, transporte, imunidade"></label><label>Disciplina<select id="med-card-category"><option value="">Todas as disciplinas</option>${cats.map(c=>`<option>${esc(c)}</option>`).join('')}</select></label></div><p id="med-card-count" role="status" aria-live="polite">${data.totalCount} cartões visíveis</p></div>`);
+    const controls = el(`<div class="flash-toolbar"><p>Flashcards organizados por disciplina, com as respostas completas em cada cartão.</p></div>`);
     originalGrid.before(controls);
     const cardGrid = document.createElement('div'); cardGrid.className='more-flash-grid';
-    cardGrid.innerHTML = data.cards.map((c,i)=>`<article class="more-flashcard tone-${i%6}" data-category="${esc(c.cat)}"><div class="flash-meta"><span>${esc(c.cat)}</span><small>${String(i+data.originalCount+1).padStart(3,'0')}</small></div><span class="flash-kind">${esc(c.kind)}</span><h3>${esc(c.q)}</h3><div class="flash-answer"><span>Resposta</span><p>${esc(c.a)}</p></div></article>`).join('');
+    cardGrid.innerHTML = data.cards.map((c,i)=>`<article class="more-flashcard tone-${i%6}" data-category="${esc(c.cat)}"><div class="flash-meta"><span>${esc(c.cat)}</span></div><span class="flash-kind">${esc(c.kind)}</span><h3>${esc(c.q)}</h3><div class="flash-answer"><span>Resposta</span><p>${esc(c.a)}</p></div></article>`).join('');
     originalGrid.after(cardGrid);
     const newCards=Array.from(cardGrid.children);
     // Native disclosures keep the complete text in the document and keyboard accessible.
@@ -43,17 +41,6 @@
     const bulk=document.createElement('button');bulk.type='button';bulk.className='mobile-answer-toggle';bulk.textContent='Abrir todas as respostas';bulk.setAttribute('aria-pressed','false');
     document.querySelector('.flash-toolbar').append(bulk);
     bulk.addEventListener('click',()=>{const open=bulk.getAttribute('aria-pressed')!=='true';flashSection.querySelectorAll('.card-reveal').forEach(d=>d.open=open);bulk.setAttribute('aria-pressed',String(open));bulk.textContent=open?'Recolher as respostas':'Abrir todas as respostas';});
-    const filter=()=>{
-      const q=normalize(document.querySelector('#med-card-search').value.trim());
-      const cat=document.querySelector('#med-card-category').value;
-      let shown=0;
-      newCards.forEach((card,i)=>{const match=(!cat||data.cards[i].cat===cat)&&(!q||normalize(card.textContent).includes(q));card.hidden=!match;if(match)shown++;});
-      originalCards.forEach(card=>{const match=!cat&&(!q||normalize(card.textContent).includes(q));card.hidden=!match;if(match)shown++;});
-      document.querySelector('#med-card-count').textContent=shown?`${shown} cartões visíveis`:'Nenhum cartão encontrado. Tente outro assunto.';
-    };
-    document.querySelector('#med-card-search').addEventListener('input',filter);
-    document.querySelector('#med-card-category').addEventListener('change',filter);
-
     // Enrich the fourteen retained examples rather than replacing their contents.
     const sheetSection=sectionFor('Veja como chega');
     if(sheetSection){
@@ -64,7 +51,7 @@
         const block=el(`<div class="sheet-reading"><span class="more-kicker">Leitura complementar</span><h3>${esc(item.title)}</h3><p>${esc(item.lead)}</p>${blocks(item.blocks)}</div>`);
         frame.append(block);
       });
-      const body=`<div class="sheet-library">${data.sheets.map((s,i)=>`<article class="study-sheet tone-${i%6}"><header><span class="sheet-number">FICHA ${String(i+15).padStart(2,'0')}</span><span>${esc(s.discipline)}</span><h3>${esc(s.title)}</h3></header><div class="sheet-body"><p class="sheet-lead">${esc(s.lead)}</p><div class="sheet-tags">${s.keywords.map(k=>`<span>${esc(k)}</span>`).join('')}</div>${blocks(s.blocks)}<footer>Do conceito à revisão · Caderno de Medicina</footer></div></article>`).join('')}</div>`;
+      const body=`<div class="sheet-library">${data.sheets.map((s,i)=>`<article class="study-sheet tone-${i%6}"><header><span class="sheet-number">Ficha de estudo</span><span>${esc(s.discipline)}</span><h3>${esc(s.title)}</h3></header><div class="sheet-body"><p class="sheet-lead">${esc(s.lead)}</p><div class="sheet-tags">${s.keywords.map(k=>`<span>${esc(k)}</span>`).join('')}</div>${blocks(s.blocks)}<footer>Do conceito à revisão · Caderno de Medicina</footer></div></article>`).join('')}</div>`;
       sheetSection.after(el(section('Mais fichas, mais leitura','Abra o assunto. Entenda as relações.','Uma seleção ampliada de fichas com conceitos, mecanismos e relações entre disciplinas. Os textos ficam abertos para leitura, sem precisar avançar por um carrossel.',body)));
     }
 
@@ -190,12 +177,12 @@
         <article class="agenda-stage-bridge"><div><span class="agenda-kicker">Estágio, prática e preceptoria</span><h3>A prática também organiza o que você vai estudar.</h3><p>Antes da atividade, você prepara o objetivo e o roteiro. Depois, registra aprendizados e dúvidas. O retorno da supervisão ajuda a definir o próximo bloco de estudo.</p></div><div class="agenda-stage-steps"><div><span>ANTES</span><strong>Preparar</strong><p>Objetivo da atividade, materiais e conteúdo para retomar.</p></div><div><span>DEPOIS</span><strong>Registrar</strong><p>Aprendizados, dúvidas e pontos discutidos com a equipe.</p></div><div><span>PRÓXIMO PASSO</span><strong>Revisar</strong><p>Resumo correspondente, flashcards e nova discussão.</p></div></div></article>
         <div class="agenda-guide">
           <header class="agenda-guide-heading"><span class="agenda-script">Um plano que explica o próximo passo.</span><h3>Não é só preencher horários. É conectar o que acontece na sua formação.</h3><p>A semana mostra os compromissos. Os cartões abaixo explicam as escolhas por trás deles: por que estudar aquele tema, quando começar uma entrega e como transformar dúvidas em novos objetivos.</p></header>
-          <div class="agenda-method-grid">${weekGuide.methods.map((item,i)=>`<article class="agenda-method-card tone-${i%6}"><span class="agenda-method-number">${String(i+1).padStart(2,'0')}</span><small>${esc(item.tag)}</small><h4>${esc(item.title)}</h4><p>${esc(item.text)}</p><aside><span>Na semana do exemplo</span><p>${esc(item.example)}</p></aside></article>`).join('')}</div>
+          <div class="agenda-method-grid">${weekGuide.methods.map((item,i)=>`<article class="agenda-method-card tone-${i%6}"><small>${esc(item.tag)}</small><h4>${esc(item.title)}</h4><p>${esc(item.text)}</p><aside><span>Na semana do exemplo</span><p>${esc(item.example)}</p></aside></article>`).join('')}</div>
           <header class="agenda-guide-heading"><span class="agenda-script">Uma semana inteira, com contexto.</span><h3>O que cada dia prepara para o próximo.</h3><p>Acompanhe a lógica do exemplo de segunda a sexta. Cada dia tem um foco, mas continua conectado às avaliações, às entregas e às experiências acadêmicas da semana.</p></header>
           <div class="agenda-day-stories">${weekGuide.days.map((day,i)=>`<article class="agenda-day-story tone-${i%6}"><header><span class="agenda-story-date">${esc(day.date)}</span><div><span>${esc(day.label)}</span><h4>${esc(day.focus)}</h4><p>${esc(day.connection)}</p></div></header><div class="agenda-story-blocks">${day.blocks.map(([title,text])=>`<div><h5>${esc(title)}</h5><p>${esc(text)}</p></div>`).join('')}</div></article>`).join('')}</div>
           <header class="agenda-guide-heading"><span class="agenda-script">O conteúdo não fica em caixinhas isoladas.</span><h3>Uma rotina que faz as partes conversarem.</h3><p>Quando um compromisso aponta para o seguinte, fica mais claro por que ele está no plano e o que você espera aprender com ele.</p></header>
-          <div class="agenda-connection-grid">${weekGuide.connections.map((item,i)=>`<article class="agenda-connection-card tone-${(i+1)%6}"><span class="agenda-connection-index">${String(i+1).padStart(2,'0')}</span><h4>${esc(item.title)}</h4><div class="agenda-link-visual" aria-hidden="true"><i></i><span></span><i></i></div><p>${esc(item.text)}</p></article>`).join('')}</div>
-          <div class="agenda-week-review"><header><span class="agenda-script">Antes de começar outra semana...</span><h3>Três perguntas para fechar o plano.</h3></header><div>${weekGuide.closing.map(([title,text],i)=>`<article><span>0${i+1}</span><h4>${esc(title)}</h4><p>${esc(text)}</p></article>`).join('')}</div></div>
+          <div class="agenda-connection-grid">${weekGuide.connections.map((item,i)=>`<article class="agenda-connection-card tone-${(i+1)%6}"><h4>${esc(item.title)}</h4><div class="agenda-link-visual" aria-hidden="true"><i></i><span></span><i></i></div><p>${esc(item.text)}</p></article>`).join('')}</div>
+          <div class="agenda-week-review"><header><span class="agenda-script">Antes de começar outra semana...</span><h3>Três perguntas para fechar o plano.</h3></header><div>${weekGuide.closing.map(([title,text],i)=>`<article><h4>${esc(title)}</h4><p>${esc(text)}</p></article>`).join('')}</div></div>
         </div>
 
         <footer class="agenda-takeaway"><span>Do semestre para a semana. Da semana para o que fazer hoje.</span><p>Planejar aulas, acompanhar provas, dividir trabalhos em etapas, retomar revisões e reservar tempo para a prática — com cada compromisso no seu contexto.</p></footer>
@@ -204,6 +191,14 @@
 
     }
 
+    // Remove decorative indexing without changing dates, schedules or course periods.
+    document.querySelectorAll('main span, main div').forEach(node=>{
+      if(node.children.length||node.closest('.agenda-lab'))return;
+      const value=node.textContent.trim();
+      if(/^Ficha \d+/.test(value))node.textContent=value.replace(/^Ficha \d+\s*[•·]?\s*/,'Ficha de estudo · ');
+      else if(/^ATIV \d+$/.test(value))node.textContent='Atividade prática';
+      else if(/^\d{2,3}$/.test(value))node.remove();
+    });
     // Encapsulate reading sheets while preserving every original node and paragraph.
     function encapsulate(card,titleNode,bodyNodes){
       if(!titleNode||!bodyNodes.length)return;

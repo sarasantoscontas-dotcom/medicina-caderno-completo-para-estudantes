@@ -33,3 +33,7 @@ Seção dedicada com semana ilustrativa de 9 a 13/11/2026, 15 compromissos e fil
 ## Semana inteira sem filtros
 
 A seção de agenda agora exibe os cinco dias integralmente, sem filtros ou conteúdo dependente de clique. O guia acrescenta seis cartões de método, cinco explicações diárias, quatro conexões entre estudo e prática e três perguntas de fechamento, todas abertas.
+
+## Limpeza de apresentação
+
+Removidos busca e filtro dos flashcards, contagem pública dos cartões e índices decorativos. Conteúdos, datas, horários, períodos e quantidades da oferta foram mantidos. Sombras fortes foram retiradas e tons vermelhos foram substituídos por azul/lilás.
