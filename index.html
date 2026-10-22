@@ -38,7 +38,50 @@
 .flash-sale-math p{font-size:15px;line-height:1.6;margin:8px 0 14px}.flash-sale-math .buy-button{display:inline-flex;max-width:100%;white-space:normal;text-align:center}
 .flash-sale-math small{display:block;margin-top:12px;font-size:12px;line-height:1.5}
 @media(max-width:600px){.flash-sale-math{padding:18px;margin:16px 0 24px}.flash-sale-math .buy-button{width:100%;justify-content:center}}
-.flash-sale-math{font-family:Arial,sans-serif}.flash-sale-math .sale-price strong{font-family:Arial,sans-serif;font-weight:800}.student-sale-button{display:inline-flex;align-items:center;justify-content:center;background:#246b66;color:#fff!important;border-radius:12px;padding:16px 22px;font:700 15px/1.4 Arial,sans-serif;text-decoration:none;min-height:48px;box-sizing:border-box;max-width:100%}.student-sale-button:hover{background:#194e4a}.student-sale-button:focus-visible{outline:3px solid #8c3d26;outline-offset:4px}@media(max-width:600px){.student-sale-button{width:100%}} </style><style id="sale-final-label-999">.purchase-price::before,.purchase-section .price::before{content:"Promoção relâmpago · por tempo limitado";display:block;font:700 12px/1.6 Arial,sans-serif;letter-spacing:.05em;color:#8c3d26;margin-bottom:10px}.purchase-price,.purchase-section .price{overflow-wrap:anywhere}</style></head>
+.flash-sale-math{font-family:Arial,sans-serif}.flash-sale-math .sale-price strong{font-family:Arial,sans-serif;font-weight:800}.student-sale-button{display:inline-flex;align-items:center;justify-content:center;background:#246b66;color:#fff!important;border-radius:12px;padding:16px 22px;font:700 15px/1.4 Arial,sans-serif;text-decoration:none;min-height:48px;box-sizing:border-box;max-width:100%}.student-sale-button:hover{background:#194e4a}.student-sale-button:focus-visible{outline:3px solid #8c3d26;outline-offset:4px}@media(max-width:600px){.student-sale-button{width:100%}} </style><style id="sale-final-label-999">.purchase-price::before,.purchase-section .price::before{content:"Promoção relâmpago · por tempo limitado";display:block;font:700 12px/1.6 Arial,sans-serif;letter-spacing:.05em;color:#8c3d26;margin-bottom:10px}.purchase-price,.purchase-section .price{overflow-wrap:anywhere}</style><link id="hero-creative-font" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;display=swap">
+<style id="hero-creative-typography">
+/* Tipografia manuscrita restrita à primeira seção. */
+html body main > #inicio#inicio h1,
+html body #root#root main > section:first-of-type h1{
+ font-family:"Caveat","Segoe Print","Bradley Hand",cursive!important;
+ font-size:clamp(52px,6.2vw,88px)!important;
+ font-weight:700!important;font-style:normal!important;
+ line-height:1.12!important;letter-spacing:.005em!important;
+ text-transform:none!important;overflow-wrap:break-word!important;
+ word-break:normal!important;hyphens:none!important;
+ padding-block:.06em .12em!important;
+}
+html body main > #inicio#inicio h1 :is(span,em,strong),
+html body #root#root main > section:first-of-type h1 :is(span,em,strong){
+ font-family:inherit!important;font-weight:700!important;font-style:normal!important;
+ font-size:inherit!important;line-height:inherit!important;letter-spacing:inherit!important;
+ text-transform:none!important;
+}
+html body main > #inicio#inicio h1 + p,
+html body main > #inicio#inicio .handwritten,
+html body main > #inicio#inicio .hero-script,
+html body #root#root main > section:first-of-type h1 + p,
+html body #root#root main > section:first-of-type .handwritten,
+html body #root#root main > section:first-of-type .hero-script{
+ font-family:"Caveat","Segoe Print","Bradley Hand",cursive!important;
+ font-size:clamp(26px,2.6vw,36px)!important;font-weight:600!important;
+ font-style:normal!important;line-height:1.35!important;letter-spacing:.01em!important;
+ text-transform:none!important;
+}
+html body main > #inicio#inicio h1 + p :is(span,em,strong),
+html body #root#root main > section:first-of-type h1 + p :is(span,em,strong){font-family:inherit!important;font-size:inherit!important;font-weight:inherit!important;line-height:inherit!important}
+@media(max-width:600px){
+ html body main > #inicio#inicio h1,
+html body #root#root main > section:first-of-type h1{font-size:clamp(40px,10.8vw,58px)!important;line-height:1.15!important;letter-spacing:0!important}
+ html body main > #inicio#inicio h1 + p,
+html body main > #inicio#inicio .handwritten,
+html body main > #inicio#inicio .hero-script,
+html body #root#root main > section:first-of-type h1 + p,
+html body #root#root main > section:first-of-type .handwritten,
+html body #root#root main > section:first-of-type .hero-script{font-size:clamp(25px,6.4vw,30px)!important;line-height:1.35!important}
+}
+</style>
+</head>
 
   <body>
     <div id="root"></div>
