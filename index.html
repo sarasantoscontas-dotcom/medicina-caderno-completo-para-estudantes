@@ -30,12 +30,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/notebook-theme.css">
-</head>
+<style id="flash-sale-style">
+.flash-sale-math{margin:20px 0 28px;padding:22px 26px;border:1px solid #246b66;border-radius:16px;background:#f5efd9;box-shadow:5px 5px 0 #246b6620;max-width:670px;color:#173f3c}
+.flash-sale-math .sale-label{display:block;font:800 12px/1.5 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8c3d26}
+.flash-sale-math .sale-price{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px;margin:8px 0}
+.flash-sale-math del{font-size:17px;opacity:.75}.flash-sale-math strong{font-size:clamp(34px,6vw,52px);line-height:1.1}
+.flash-sale-math p{font-size:15px;line-height:1.6;margin:8px 0 14px}.flash-sale-math .buy-button{display:inline-flex;max-width:100%;white-space:normal;text-align:center}
+.flash-sale-math small{display:block;margin-top:12px;font-size:12px;line-height:1.5}
+@media(max-width:600px){.flash-sale-math{padding:18px;margin:16px 0 24px}.flash-sale-math .buy-button{width:100%;justify-content:center}}
+.flash-sale-math{font-family:Arial,sans-serif}.flash-sale-math .sale-price strong{font-family:Arial,sans-serif;font-weight:800}.student-sale-button{display:inline-flex;align-items:center;justify-content:center;background:#246b66;color:#fff!important;border-radius:12px;padding:16px 22px;font:700 15px/1.4 Arial,sans-serif;text-decoration:none;min-height:48px;box-sizing:border-box;max-width:100%}.student-sale-button:hover{background:#194e4a}.student-sale-button:focus-visible{outline:3px solid #8c3d26;outline-offset:4px}@media(max-width:600px){.student-sale-button{width:100%}} </style></head>
 
   <body>
     <div id="root"></div>
   
 
 
-</body>
+<script id="student-promo-mount">(()=>{const markup="<div class=\"flash-sale-math\" id=\"student-flash-sale\" aria-label=\"Promoção relâmpago\"><span class=\"sale-label\">Promoção relâmpago · por tempo limitado</span><div class=\"sale-price\"><del>De R$ 29,89</del><strong>Por R$ 9,99</strong></div><p>Caderno completo para estudantes de Medicina, com resumos prontos, flashcards e organização acadêmica.</p><a class=\"student-sale-button\" href=\"https://pay.cakto.com.br/a5q8fbq\" target=\"_blank\" rel=\"noopener noreferrer\">Adquirir por R$ 9,99</a><small>Pagamento único · sem mensalidade</small></div>";function mount(){if(document.getElementById('student-flash-sale'))return true;const h=document.querySelector('main h1,h1');if(!h)return false;const intro=h.parentElement.querySelector('p');(intro||h).insertAdjacentHTML('afterend',markup);return true;}if(!mount()){const observer=new MutationObserver(()=>{if(mount())observer.disconnect();});observer.observe(document.getElementById('root')||document.body,{childList:true,subtree:true});}})();</script></body>
 </html>
