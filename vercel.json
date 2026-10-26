@@ -1,12 +1,7 @@
 {
   "framework": null,
   "installCommand": "echo \"Site estatico sem dependencias\"",
-  "buildCommand": "npm run build",
+  "buildCommand": "node scripts/build-approved.mjs",
   "outputDirectory": "dist",
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
+  "cleanUrls": true
 }
